@@ -1,36 +1,183 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Management App - AI Automation Challenge
 
-## Getting Started
+A modern task management application built with Next.js, custom backend API, and AI automation capabilities.
 
-First, run the development server:
+## Features
+
+### Part 1 - Core Task Management ✅
+
+- ✅ **User Authentication**: Sign up/sign in with JWT tokens
+- ✅ **Advanced Task Management**: Add, edit, complete, and delete tasks
+- ✅ **Rich Task Data**: Title, description, priority, due date, estimated hours, tags
+- ✅ **Data Persistence**: All data stored in custom backend API
+- ✅ **Modern UI**: Clean, responsive interface with Tailwind CSS
+- ✅ **TypeScript**: Full type safety throughout the application
+
+### Part 2 - AI Enhancement (Coming Soon)
+
+- 🔄 N8N integration for workflow automation
+- 🔄 AI-powered task title enhancement
+- 🔄 Chatbot interface
+- 🔄 WhatsApp integration (bonus)
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS
+- **Backend**: Custom REST API with JWT authentication
+- **Database**: Backend-managed (PostgreSQL/MySQL)
+- **Deployment**: Vercel
+- **AI Tools**: Cursor (AI assistant)
+
+## Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Backend API running (local or production)
+- N8N instance (for Part 2)
+
+## Setup Instructions
+
+### 1. Clone and Install Dependencies
+
+```bash
+git clone <your-repo-url>
+cd task-management-app
+npm install
+```
+
+### 2. Backend API Setup
+
+The app is configured to work with your custom backend API:
+
+- **Development**: `http://localhost:3001`
+- **Production**: `https://tast-manager-4dd398dea15c.herokuapp.com/`
+
+Make sure your backend API is running and accessible.
+
+### 3. Environment Variables
+
+Create a `.env.local` file in the root directory (optional for development):
+
+```bash
+# Backend API Configuration (optional - defaults to localhost:3001)
+NEXT_PUBLIC_API_URL=http://localhost:3001
+
+# N8N Configuration (for Part 2)
+N8N_WEBHOOK_URL=your_n8n_webhook_url
+N8N_API_KEY=your_n8n_api_key
+
+# AI Service Configuration (for Part 2)
+OPENAI_API_KEY=your_openai_api_key
+```
+
+### 4. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Deploy to Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard (if needed)
+4. Deploy!
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                 # Next.js app router
+│   ├── layout.tsx      # Root layout with AuthProvider
+│   ├── page.tsx        # Main task management page
+│   └── globals.css     # Global styles
+├── components/          # React components
+│   ├── auth/           # Authentication components
+│   ├── tasks/          # Task management components
+│   └── ui/             # Reusable UI components
+├── contexts/            # React contexts
+│   └── AuthContext.tsx # Authentication context
+├── lib/                 # Utility libraries
+│   └── api.ts          # Backend API client
+└── types/               # TypeScript type definitions
+    └── database.ts     # API data types
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Integration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The app integrates with your backend API through the following endpoints:
 
-## Deploy on Vercel
+### Authentication
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `PUT /api/auth/profile` - Profile updates
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Tasks
+
+- `GET /api/tasks` - Fetch all tasks
+- `POST /api/tasks` - Create new task
+- `PUT /api/tasks/:id` - Update task
+- `PATCH /api/tasks/:id/status` - Update task status
+- `DELETE /api/tasks/:id` - Delete task
+
+### Task Data Structure
+
+```typescript
+interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  status:
+    | "not_started"
+    | "planning"
+    | "in_progress"
+    | "review"
+    | "testing"
+    | "completed"
+    | "on_hold"
+    | "cancelled"
+    | "deferred"
+    | "blocked";
+  priority: "low" | "medium" | "high" | "urgent";
+  due_date?: string;
+  estimated_hours?: number;
+  actual_hours?: number;
+  tags?: string[];
+  assignee_id?: string;
+  created_at: string;
+  updated_at: string;
+}
+```
+
+## Current Status
+
+- ✅ **Part 1 Complete**: Full task management functionality with backend API
+- 🔄 **Part 2 In Progress**: N8N integration and AI enhancement
+- 🔄 **Bonus Features**: WhatsApp integration planned
+
+## Next Steps for Part 2
+
+1. Set up N8N instance
+2. Create workflow for AI task enhancement
+3. Integrate chatbot interface
+4. Add WhatsApp integration (bonus)
+5. Test end-to-end automation
+
+## Contributing
+
+This is a challenge submission for an AI Automation Developer position. The app demonstrates:
+
+- Modern React/Next.js development
+- Custom backend API integration
+- TypeScript best practices
+- Clean component architecture
+- Responsive UI design
+- JWT authentication handling
+
+## License
+
+MIT License - feel free to use this code for learning purposes.
