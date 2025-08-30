@@ -24,12 +24,12 @@ export function Drawer({ isOpen, onClose, title, children }: DrawerProps) {
 
       {/* Drawer */}
       <div
-        className={`fixed right-0 top-0 h-full w-full max-w-md lg:max-w-4xl xl:max-w-5xl bg-slate-800 shadow-2xl z-50 transform transition-all duration-300 ease-out ${
+        className={`fixed right-0 top-0 h-full w-full max-w-md lg:max-w-4xl xl:max-w-5xl bg-slate-800 shadow-2xl z-50 transform transition-all duration-300 ease-out flex flex-col ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-700">
+        <div className="flex items-center justify-between p-6 border-b border-slate-700 flex-shrink-0">
           <h2 className="text-xl font-semibold text-slate-100">{title}</h2>
           <button
             onClick={onClose}
@@ -40,7 +40,7 @@ export function Drawer({ isOpen, onClose, title, children }: DrawerProps) {
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto h-full bg-slate-800">
+        <div className="flex-1 overflow-y-auto bg-slate-800 p-6">
           {children}
         </div>
       </div>

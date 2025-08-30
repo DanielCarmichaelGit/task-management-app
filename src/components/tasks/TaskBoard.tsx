@@ -138,7 +138,7 @@ export function TaskBoard({
                 {groupTasks.map((task) => (
                   <div
                     key={task.id}
-                    className={`p-4 rounded-xl border border-slate-600/60 ${group.bgColor} hover:border-slate-500/60 transition-all duration-200 cursor-pointer group`}
+                    className={`p-4 rounded-xl border border-slate-600/60 ${group.bgColor} hover:border-slate-500/60 transition-all duration-200 cursor-pointer group min-h-[200px]`}
                     onClick={() => onEditTask(task)}
                   >
                     {/* Task Header */}
@@ -173,18 +173,7 @@ export function TaskBoard({
                     {/* Task Footer */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-400 capitalize">
-                          {task.status.replace("_", " ")}
-                        </span>
-                        {task.estimated_hours && (
-                          <span className="text-xs text-slate-400">
-                            Est: {task.estimated_hours}h
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Status Dropdown */}
-                      <div className="flex items-center gap-2">
+                        {/* Status Dropdown */}
                         <select
                           value={task.status}
                           onChange={(e) => {

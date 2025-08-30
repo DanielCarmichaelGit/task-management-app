@@ -7,14 +7,17 @@ import {
 } from "@/types/database";
 
 const API_BASE_URL =
-  process.env.NODE_ENV === "production"
+  process.env.NEXT_PUBLIC_NODE_ENV === "production"
     ? "https://tast-manager-4dd398dea15c.herokuapp.com/api"
     : "http://localhost:3021/api";
 
 const healthCheckUrl =
-  process.env.NODE_ENV === "production"
+  process.env.NEXT_PUBLIC_NODE_ENV === "production"
     ? "https://tast-manager-4dd398dea15c.herokuapp.com/health"
     : "http://localhost:3021/health";
+
+const n8nEnhancementUrl =
+  process.env.NEXT_PUBLIC_N8N_ENHANCE_WEBHOOK_URL;
 
 // Simple cookie functions
 function setCookie(name: string, value: string, days: number = 7) {
@@ -94,6 +97,9 @@ async function apiRequest<T>(
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    Pragma: "no-cache",
+    Expires: "0",
     ...(options.headers as Record<string, string>),
   };
 
@@ -270,6 +276,28 @@ export async function createTask(taskData: Partial<Task>): Promise<Task> {
     method: "POST",
     body: JSON.stringify(taskData),
   });
+}
+
+export async function enhanceTask(taskId: string): Promise<Task> {
+  const { token } = getAuth();
+
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  if (!n8nEnhancementUrl) {
+    throw new Error("N8N enhancement URL is not set");
+  }
+
+  const response = await fetch(n8nEnhancementUrl, {
+    method: "POST",
+    body: JSON.stringify({ id: taskId, token }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response.json();
 }
 
 export async function updateTask(

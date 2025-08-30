@@ -10,6 +10,7 @@ import { DashboardView } from "@/components/dashboard/DashboardView";
 import { BoardView } from "@/components/dashboard/BoardView";
 import { CalendarView } from "@/components/dashboard/CalendarView";
 import { CreateTaskButton } from "@/components/dashboard/CreateTaskButton";
+import { ChatbotWidget } from "@/components/chat/ChatbotWidget";
 import {
   getTasks,
   createTask,
@@ -30,6 +31,8 @@ export default function Home() {
   const [currentView, setCurrentView] = useState<
     "dashboard" | "board" | "calendar"
   >("dashboard");
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isChatMinimized, setIsChatMinimized] = useState(false);
 
   const fetchTasks = useCallback(async () => {
     if (!user) return;
@@ -57,6 +60,19 @@ export default function Home() {
       fetchTasks();
     }
   }, [user, fetchTasks]);
+
+  // Listen for global refetch requests
+  useEffect(() => {
+    const handleGlobalRefetch = () => {
+      fetchTasks();
+    };
+
+    window.addEventListener("tasks:refetch", handleGlobalRefetch);
+
+    return () => {
+      window.removeEventListener("tasks:refetch", handleGlobalRefetch);
+    };
+  }, [fetchTasks]);
 
   const handleTask = async (taskData: Partial<Task>) => {
     if (!user) return;
@@ -329,6 +345,16 @@ export default function Home() {
           onClose={() => setSelectedTask(null)}
         />
       </Drawer>
+
+      {/* Chatbot Widget - Only show for logged-in users */}
+      {user && (
+        <ChatbotWidget
+          isOpen={isChatOpen}
+          onToggle={() => setIsChatOpen(!isChatOpen)}
+          onMinimize={() => setIsChatMinimized(!isChatMinimized)}
+          isMinimized={isChatMinimized}
+        />
+      )}
     </div>
   );
 }
