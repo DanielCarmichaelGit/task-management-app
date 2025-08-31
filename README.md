@@ -1,42 +1,51 @@
-# Task Management App - AI Automation Challenge
+# Upward - Task Management App
 
-A modern task management application built with Next.js, custom backend API, and AI automation capabilities.
+A modern, AI-enhanced task management application built with Next.js 15, featuring a beautiful dark theme, multiple view modes, and integrated AI chatbot assistance.
 
-## Features
+## ✨ Features
 
-### Part 1 - Core Task Management ✅
+### Core Task Management
 
-- ✅ **User Authentication**: Sign up/sign in with JWT tokens
-- ✅ **Advanced Task Management**: Add, edit, complete, and delete tasks
-- ✅ **Rich Task Data**: Title, description, priority, due date, estimated hours, tags
-- ✅ **Data Persistence**: All data stored in custom backend API
-- ✅ **Modern UI**: Clean, responsive interface with Tailwind CSS
-- ✅ **TypeScript**: Full type safety throughout the application
+- **User Authentication**: Secure sign up/sign in with JWT token-based authentication
+- **Advanced Task Management**: Create, edit, complete, and delete tasks with rich metadata
+- **Multiple View Modes**:
+  - Dashboard view with task overview and statistics
+  - Kanban board view for visual task organization
+  - Calendar view for timeline-based task planning
+- **Rich Task Data**: Title, description, priority levels, due dates, estimated/actual hours, tags, and assignees
+- **Task Status Workflow**: Comprehensive status tracking from planning to completion
+- **Data Persistence**: All data stored in custom backend API with real-time updates
 
-### Part 2 - AI Enhancement (Coming Soon)
+### AI & Automation Features
 
-- 🔄 N8N integration for workflow automation
-- 🔄 AI-powered task title enhancement
-- 🔄 Chatbot interface
-- 🔄 WhatsApp integration (bonus)
+- **Integrated AI Chatbot**: Built-in n8n-powered chatbot widget for task assistance
+- **Smart Task Enhancement**: AI-powered task title and description improvements
+- **Workflow Automation**: N8N integration for automated task processing
 
-## Tech Stack
+### User Experience
+
+- **Modern Dark Theme**: Beautiful gradient-based dark UI with Tailwind CSS
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Real-time Updates**: Instant task synchronization across all views
+- **Intuitive Interface**: Clean, accessible design with smooth animations
+
+## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 15, React 19, TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS 4 with custom gradient themes
 - **Backend**: Custom REST API with JWT authentication
-- **Database**: Backend-managed (PostgreSQL/MySQL)
-- **Deployment**: Vercel
-- **AI Tools**: Cursor (AI assistant)
+- **Database**: PostgreSQL/MySQL (managed by backend)
+- **AI Integration**: N8N workflow automation platform
+- **Deployment**: Vercel-ready with environment-based configuration
 
-## Prerequisites
+## 📋 Prerequisites
 
 - Node.js 18+
-- npm or yarn
-- Backend API running (local or production)
-- N8N instance (for Part 2)
+- npm or yarn package manager
+- Running backend API instance
+- N8N instance (for AI chatbot features)
 
-## Setup Instructions
+## 🚀 Setup Instructions
 
 ### 1. Clone and Install Dependencies
 
@@ -46,32 +55,42 @@ cd task-management-app
 npm install
 ```
 
-### 2. Backend API Setup
+### 2. Backend API Configuration
 
-The app is configured to work with your custom backend API:
+The app connects to your custom backend API. Configure the endpoints in your environment:
 
-- **Development**: `http://localhost:3001`
-- **Production**: `https://tast-manager-4dd398dea15c.herokuapp.com/`
+**Development**: `http://localhost:3021/api`
+**Production**: `https://tast-manager-4dd398dea15c.herokuapp.com/api`
 
-Make sure your backend API is running and accessible.
+Ensure your backend API is running and accessible.
 
 ### 3. Environment Variables
 
-Create a `.env.local` file in the root directory (optional for development):
+Create a `.env.local` file in the root directory:
 
 ```bash
-# Backend API Configuration (optional - defaults to localhost:3001)
-NEXT_PUBLIC_API_URL=http://localhost:3001
+# Backend API Configuration
+NEXT_PUBLIC_NODE_ENV=development
 
-# N8N Configuration (for Part 2)
-N8N_WEBHOOK_URL=your_n8n_webhook_url
-N8N_API_KEY=your_n8n_api_key
+# N8N Chat Integration
+NEXT_PUBLIC_N8N_WEBHOOK_URL=your_n8n_webhook_url
+NEXT_PUBLIC_N8N_ENHANCE_WEBHOOK_URL=your_n8n_enhancement_webhook
 
-# AI Service Configuration (for Part 2)
-OPENAI_API_KEY=your_openai_api_key
+# Optional: Override API URLs
+# NEXT_PUBLIC_API_URL=http://localhost:3021/api
 ```
 
-### 4. Run Development Server
+### 4. N8N Chat Setup
+
+For the AI chatbot functionality:
+
+1. Set up an N8N instance
+2. Create a chat workflow with webhook trigger
+3. Configure AI integration (OpenAI, Anthropic, etc.)
+4. Copy the webhook URL to `NEXT_PUBLIC_N8N_WEBHOOK_URL`
+5. See `N8N_CHAT_SETUP.md` for detailed instructions
+
+### 5. Run Development Server
 
 ```bash
 npm run dev
@@ -79,36 +98,45 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 5. Deploy to Vercel
+### 6. Build and Deploy
 
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add environment variables in Vercel dashboard (if needed)
-4. Deploy!
+```bash
+# Build for production
+npm run build
 
-## Project Structure
+# Start production server
+npm start
+
+# Deploy to Vercel
+npm run build
+# Then deploy the .next folder to Vercel
+```
+
+## 🏗️ Project Structure
 
 ```
 src/
-├── app/                 # Next.js app router
-│   ├── layout.tsx      # Root layout with AuthProvider
-│   ├── page.tsx        # Main task management page
-│   └── globals.css     # Global styles
-├── components/          # React components
-│   ├── auth/           # Authentication components
-│   ├── tasks/          # Task management components
-│   └── ui/             # Reusable UI components
-├── contexts/            # React contexts
-│   └── AuthContext.tsx # Authentication context
-├── lib/                 # Utility libraries
-│   └── api.ts          # Backend API client
-└── types/               # TypeScript type definitions
-    └── database.ts     # API data types
+├── app/                    # Next.js app router
+│   ├── layout.tsx         # Root layout with AuthProvider
+│   ├── page.tsx           # Main application page
+│   └── globals.css        # Global styles and Tailwind
+├── components/             # React components
+│   ├── auth/              # Authentication components
+│   ├── chat/              # AI chatbot integration
+│   ├── dashboard/         # Dashboard and view components
+│   ├── tasks/             # Task management components
+│   └── ui/                # Reusable UI components
+├── contexts/               # React contexts
+│   └── AuthContext.tsx    # Authentication state management
+├── lib/                    # Utility libraries
+│   └── api.ts             # Backend API client and auth
+└── types/                  # TypeScript definitions
+    └── database.ts        # API data types and interfaces
 ```
 
-## API Integration
+## 🔌 API Integration
 
-The app integrates with your backend API through the following endpoints:
+The app integrates with your backend through these endpoints:
 
 ### Authentication
 
@@ -153,31 +181,83 @@ interface Task {
 }
 ```
 
-## Current Status
+## 🎯 Current Implementation Status
 
-- ✅ **Part 1 Complete**: Full task management functionality with backend API
-- 🔄 **Part 2 In Progress**: N8N integration and AI enhancement
-- 🔄 **Bonus Features**: WhatsApp integration planned
+- ✅ **Core Task Management**: Fully implemented and functional
+- ✅ **User Authentication**: JWT-based auth with secure cookie storage
+- ✅ **Multiple View Modes**: Dashboard, Board, and Calendar views
+- ✅ **Responsive UI**: Modern dark theme with Tailwind CSS
+- ✅ **Backend Integration**: Complete API integration
+- ✅ **AI Chatbot**: N8N-powered chat widget integrated
+- 🔄 **Task Enhancement**: AI-powered task improvement (requires N8N setup)
+- 🔄 **Workflow Automation**: N8N workflows for task processing
 
-## Next Steps for Part 2
+## 🚧 Development Notes
 
-1. Set up N8N instance
-2. Create workflow for AI task enhancement
-3. Integrate chatbot interface
-4. Add WhatsApp integration (bonus)
-5. Test end-to-end automation
+### Authentication
 
-## Contributing
+- Uses secure HTTP-only cookies for token storage
+- Automatic token refresh and unauthorized handling
+- Global auth state management with React Context
 
-This is a challenge submission for an AI Automation Developer position. The app demonstrates:
+### State Management
 
-- Modern React/Next.js development
-- Custom backend API integration
-- TypeScript best practices
+- Local state for UI components
+- Global event system for task updates
+- Optimistic updates for better UX
+
+### Performance
+
+- Lazy loading of view components
+- Efficient re-rendering with React hooks
+- Optimized API calls with proper error handling
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Backend Connection Failed**
+
+   - Verify backend API is running
+   - Check API URL configuration
+   - Ensure CORS is properly configured
+
+2. **Chatbot Not Loading**
+
+   - Verify N8N webhook URL in environment
+   - Check N8N instance is running
+   - Review browser console for errors
+
+3. **Authentication Issues**
+   - Clear browser cookies
+   - Check backend auth endpoints
+   - Verify JWT token format
+
+### Development Tips
+
+- Use browser dev tools to monitor API calls
+- Check Network tab for failed requests
+- Review Console for JavaScript errors
+- Verify environment variables are loaded
+
+## 📚 Additional Resources
+
+- [N8N Chat Setup Guide](N8N_CHAT_SETUP.md) - Detailed chatbot configuration
+- [Backend API Documentation](backend-api.md) - API endpoint specifications
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+## 🤝 Contributing
+
+This is a production-ready task management application demonstrating:
+
+- Modern React/Next.js development patterns
+- Secure authentication implementation
 - Clean component architecture
-- Responsive UI design
-- JWT authentication handling
+- Responsive design principles
+- AI integration best practices
+- TypeScript type safety
 
-## License
+## 📄 License
 
-MIT License - feel free to use this code for learning purposes.
+MIT License - Feel free to use this code for learning and development purposes.
