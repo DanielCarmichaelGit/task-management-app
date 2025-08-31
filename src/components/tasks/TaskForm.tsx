@@ -311,7 +311,6 @@ export function TaskForm({
     setAiLoading(true);
 
     try {
-      console.log("Enhancing task:", taskId);
       const response = await enhanceTask(taskId);
 
       // Trigger global refetch to update task list
