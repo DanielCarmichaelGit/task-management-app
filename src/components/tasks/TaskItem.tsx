@@ -80,8 +80,6 @@ export function TaskItem({
 
   const getPriorityColor = (priority: Task["priority"]) => {
     switch (priority) {
-      case "urgent":
-        return "bg-red-100 text-red-800";
       case "high":
         return "bg-orange-100 text-orange-800";
       case "medium":
@@ -117,7 +115,6 @@ export function TaskItem({
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
-            <option value="urgent">Urgent</option>
           </select>
         </div>
 

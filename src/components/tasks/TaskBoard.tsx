@@ -70,8 +70,6 @@ export function TaskBoard({
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "urgent":
-        return "bg-red-500";
       case "high":
         return "bg-orange-500";
       case "medium":

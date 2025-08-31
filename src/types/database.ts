@@ -13,7 +13,7 @@ export interface Task {
     | "cancelled"
     | "deferred"
     | "blocked";
-  priority: "low" | "medium" | "high" | "urgent";
+  priority: "low" | "medium" | "high";
   due_date?: string;
   estimated_hours?: number;
   actual_hours?: number;

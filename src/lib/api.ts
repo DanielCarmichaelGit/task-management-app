@@ -16,9 +16,6 @@ const healthCheckUrl =
     ? "https://tast-manager-4dd398dea15c.herokuapp.com/health"
     : "http://localhost:3021/health";
 
-const n8nEnhancementUrl =
-  process.env.NEXT_PUBLIC_N8N_ENHANCE_WEBHOOK_URL;
-
 // Simple cookie functions
 function setCookie(name: string, value: string, days: number = 7) {
   if (typeof window === "undefined") return;
@@ -280,10 +277,24 @@ export async function createTask(taskData: Partial<Task>): Promise<Task> {
 
 export async function enhanceTask(taskId: string): Promise<Task> {
   const { token } = getAuth();
+  const n8nEnhancementUrl = process.env.NEXT_PUBLIC_N8N_ENHANCE_WEBHOOK_URL;
+
+  console.log("All envs:", {
+    NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_N8N_WEBHOOK_URL: process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL,
+    NEXT_PUBLIC_N8N_ENHANCE_WEBHOOK_URL: process.env.NEXT_PUBLIC_N8N_ENHANCE_WEBHOOK_URL,
+  });
+  
 
   if (!token) {
     throw new Error("No token found");
   }
+
+  if (!taskId) {
+    throw new Error("Task ID is not set");
+  }
+
+  console.log("N8N enhancement URL:", n8nEnhancementUrl);
 
   if (!n8nEnhancementUrl) {
     throw new Error("N8N enhancement URL is not set");

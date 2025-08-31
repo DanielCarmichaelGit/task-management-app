@@ -33,7 +33,7 @@ export function TaskList({
     }
 
     // Then by priority (urgent > high > medium > low)
-    const priorityOrder = { urgent: 4, high: 3, medium: 2, low: 1 };
+    const priorityOrder = { high: 3, medium: 2, low: 1 };
     const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];
     if (priorityDiff !== 0) return priorityDiff;
 

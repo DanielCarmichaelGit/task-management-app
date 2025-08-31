@@ -311,13 +311,18 @@ export function TaskForm({
     setAiLoading(true);
 
     try {
+      console.log("Enhancing task:", taskId);
       const response = await enhanceTask(taskId);
-      console.log("AI enhancement completed:", response);
 
       // Trigger global refetch to update task list
       triggerGlobalTaskRefetch();
     } catch (error) {
-      console.error("AI enhancement failed:", error);
+      // Show error to user so they know what happened
+      if (error instanceof Error) {
+        alert(`AI enhancement failed: ${error.message}`);
+      } else {
+        alert("AI enhancement failed. Please try again later.");
+      }
     } finally {
       // Hide loading overlay after completion (success or failure)
       setAiLoading(false);
@@ -369,7 +374,6 @@ export function TaskForm({
                 { value: "low", label: "Low" },
                 { value: "medium", label: "Medium" },
                 { value: "high", label: "High" },
-                { value: "urgent", label: "Urgent" },
               ]}
               value={taskData.priority}
               onChange={(value) =>
